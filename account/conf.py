@@ -54,4 +54,7 @@ class AccountAppConf(AppConf):
     LANGUAGES = LANGUAGES
 
     def configure_hookset(self, value):
-        return load_path_attr(value)()
+        try:
+            return load_path_attr(value)()
+        except AttributeError:
+            return value()

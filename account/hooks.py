@@ -64,7 +64,10 @@ class AccountDefaultHookSet(object):
 class HookProxy(object):
 
     def __getattr__(self, attr):
-        return getattr(settings.ACCOUNT_HOOKSET, attr)
+        try:
+            return getattr(settings.ACCOUNT_HOOKSET, attr)
+        except AttributeError:
+            return getattr(settings.ACCOUNT_HOOKSET()(), attr)
 
 
 hookset = HookProxy()
